@@ -70,9 +70,14 @@ public class ApacheDubboProxyService {
     public Mono<Object> genericInvoker(final String body, final MetaData metaData, final ServerWebExchange exchange) throws SoulException {
         // issue(https://github.com/dromara/soul/issues/471), add dubbo tag route
         String dubboTagRouteFromHttpHeaders = exchange.getRequest().getHeaders().getFirst(Constants.DUBBO_TAG_ROUTE);
+        //用于获取header中的token和lang字段
+        String newLifeToken = exchange.getRequest().getHeaders().getFirst("NewLifeToken");
+        String newLifeLang = exchange.getRequest().getHeaders().getFirst("NewLifeLang");
         if (StringUtils.isNotBlank(dubboTagRouteFromHttpHeaders)) {
             RpcContext.getContext().setAttachment(CommonConstants.TAG_KEY, dubboTagRouteFromHttpHeaders);
         }
+        RpcContext.getContext().setAttachment("NewLifeToken", newLifeToken);
+        RpcContext.getContext().setAttachment("NewLifeLang", newLifeLang);
         ReferenceConfig<GenericService> reference = ApplicationConfigCache.getInstance().get(metaData.getPath());
         if (Objects.isNull(reference) || StringUtils.isEmpty(reference.getInterface())) {
             ApplicationConfigCache.getInstance().invalidate(metaData.getPath());

@@ -31,7 +31,7 @@
     <properties>
         <apache.dubbo.version>2.7.0</apache.dubbo.version>
     </properties>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.dromara</groupId>
@@ -82,5 +82,20 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+    <distributionManagement>
+        <repository>
+            <!--这里面的名字要跟 setting.xml 文件中 servers 里面的一致-->
+            <!--这个是 release 库的发布地址-->
+            <id>Team Nexus Repository</id>
+            <name>Nexus Release Repository</name>
+            <url>http://192.168.0.189:8081/repository/maven-public/</url>
+        </repository>
+        <snapshotRepository>
+            <!--这里面的名字要跟 setting.xml 文件中 servers 里面的一致-->
+            <!--这个是 snapshot 库的发布地址-->
+            <id>snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://192.168.0.189:8081/repository/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
